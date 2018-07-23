@@ -3,7 +3,7 @@ package br.com.nmsystems.baireslistdemo.model;
 public class Trans_Env {
 
     private String startDate;
-    private String endDarte;
+    private String endDate;
     private String includeSuggested;
 
     public String getStartDate() {
@@ -14,12 +14,12 @@ public class Trans_Env {
         this.startDate = startDate;
     }
 
-    public String getEndDarte() {
-        return endDarte;
+    public String getEndDate() {
+        return endDate;
     }
 
-    public void setEndDarte(String endDarte) {
-        this.endDarte = endDarte;
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
     }
 
     public String getIncludeSuggested() {

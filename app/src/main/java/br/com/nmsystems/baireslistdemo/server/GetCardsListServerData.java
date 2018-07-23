@@ -16,6 +16,8 @@ import br.com.nmsystems.baireslistdemo.util.ToolBox;
 
 public class GetCardsListServerData implements GetCardsListServerDataContract {
 
+    public static final String BASE_URL = "https://webservices.vividseats.com/rest/mobile/v1/home/cards";
+
     private CardsListContract.I_View mView;
 
 
@@ -30,7 +32,7 @@ public class GetCardsListServerData implements GetCardsListServerDataContract {
 
         Trans_Env env = new Trans_Env();
         env.setStartDate(startDate);
-        env.setEndDarte(endDarte);
+        env.setEndDate(endDarte);
         env.setIncludeSuggested(String.valueOf(includeSuggested));
 
         new SyncTask().execute(gson.toJson(env));
@@ -50,13 +52,8 @@ public class GetCardsListServerData implements GetCardsListServerDataContract {
 
             try {
                 resultado = ToolBox.connWebService(
-                        "https://webservices.vividseats.com/rest/mobile/v1/home/cards",
-                        "{\n" +
-                                "\"startDate\": \"2018-07-19\",\n" +
-                                "\"endDate\": \"2018-07-25\",\n" +
-                                "\"includeSuggested\": \"true\"\n" +
-                                "}"
-//                        strings[0]
+                        BASE_URL,
+                        strings[0]
                 );
             } catch (Exception e) {
                 return e.toString();
