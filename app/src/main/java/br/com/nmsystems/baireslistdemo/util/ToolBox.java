@@ -171,18 +171,18 @@ public class ToolBox {
         return writer.toString();
     }
 
-    public static String sDays(String sDTFormat, int days_to_add) {
+    public static String sDays(String sDTFormat, int days_to_sub) {
         String sFormat = null;
         //
         if (sDTFormat == null || sDTFormat.isEmpty()) {
-            sFormat = "yyyy-MM-dd";
+            sDTFormat = "yyyy-MM-dd";
         } else {
             sFormat = sDTFormat;
         }
 
         String sResults = "";
         Calendar ca1 = Calendar.getInstance();
-        ca1.set(Calendar.DAY_OF_MONTH, ca1.get(Calendar.DAY_OF_MONTH) + (days_to_add));
+        ca1.set(Calendar.DAY_OF_MONTH, ca1.get(Calendar.DAY_OF_MONTH) + (days_to_sub + 1));
         //
         SimpleDateFormat sdf = new SimpleDateFormat(sFormat) {
             public StringBuffer format(Date date, StringBuffer toAppendTo, FieldPosition pos) {
