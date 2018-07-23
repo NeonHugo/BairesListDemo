@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import br.com.nmsystems.baireslistdemo.model.Card;
 import br.com.nmsystems.baireslistdemo.model.Trans_Env;
 import br.com.nmsystems.baireslistdemo.ui.CardsListContract;
+import br.com.nmsystems.baireslistdemo.util.Constants;
 import br.com.nmsystems.baireslistdemo.util.HMAux;
 import br.com.nmsystems.baireslistdemo.util.ToolBox;
 
@@ -30,7 +31,7 @@ public class GetCardsListServerData implements GetCardsListServerDataContract {
         Trans_Env env = new Trans_Env();
         env.setStartDate(startDate);
         env.setEndDarte(endDarte);
-        env.setIncludeSuggested(includeSuggested);
+        env.setIncludeSuggested(String.valueOf(includeSuggested));
 
         new SyncTask().execute(gson.toJson(env));
     }
@@ -55,6 +56,7 @@ public class GetCardsListServerData implements GetCardsListServerDataContract {
                                 "\"endDate\": \"2018-07-25\",\n" +
                                 "\"includeSuggested\": \"true\"\n" +
                                 "}"
+//                        strings[0]
                 );
             } catch (Exception e) {
                 return e.toString();
@@ -78,11 +80,12 @@ public class GetCardsListServerData implements GetCardsListServerDataContract {
                 for (int i = 0; i < cardsClass.size(); i++) {
                     HMAux item = new HMAux();
 
-                    item.put("image", cardsClass.get(i).getImage());
-                    item.put("toplabel", cardsClass.get(i).getTopLabel());
-                    item.put("middlelabel", cardsClass.get(i).getMiddleLabel());
-                    item.put("bottomlabel", cardsClass.get(i).getBottomLabel());
-                    item.put("love", "0");
+                    item.put(Constants.IMAGE, cardsClass.get(i).getImage());
+                    item.put(Constants.TOPLABEL, cardsClass.get(i).getTopLabel());
+                    item.put(Constants.MIDDLELABEL, cardsClass.get(i).getMiddleLabel());
+                    item.put(Constants.BOTTOMLABEL, cardsClass.get(i).getBottomLabel());
+                    item.put(Constants.EVENTCOUNT, String.valueOf(cardsClass.get(i).getEventCount()));
+                    item.put(Constants.LOVE, "0");
 
                     cards.add(item);
                 }

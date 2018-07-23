@@ -14,8 +14,10 @@ import java.io.StringWriter;
 import java.io.Writer;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.FieldPosition;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -182,7 +184,12 @@ public class ToolBox {
         Calendar ca1 = Calendar.getInstance();
         ca1.set(Calendar.DAY_OF_MONTH, ca1.get(Calendar.DAY_OF_MONTH) + (days_to_add));
         //
-        SimpleDateFormat sdf = new SimpleDateFormat(sFormat);
+        SimpleDateFormat sdf = new SimpleDateFormat(sFormat) {
+            public StringBuffer format(Date date, StringBuffer toAppendTo, FieldPosition pos) {
+                StringBuffer toFix = super.format(date, toAppendTo, pos);
+                return toFix.insert(toFix.length() - 2, ':');
+            }
+        };
 
         try {
             sResults = sdf.format(ca1.getTime());

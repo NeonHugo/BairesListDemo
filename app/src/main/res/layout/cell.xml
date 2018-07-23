@@ -55,6 +55,7 @@
         android:text="Teste de Colocacao de teste" />
 
     <TextView
+        android:id="@+id/cell_eventcount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/cell_image"

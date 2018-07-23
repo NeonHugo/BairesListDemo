@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.nmsystems.baireslistdemo.R;
+import br.com.nmsystems.baireslistdemo.util.Constants;
 import br.com.nmsystems.baireslistdemo.util.HMAux;
 import br.com.nmsystems.baireslistdemo.util.ToolBox;
 
@@ -90,7 +91,7 @@ public class CardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
         //
         defaultVH.mLove.setOnCheckedChangeListener(null);
         defaultVH.mLove.setTag(position);
-        if (item.get("love").equals("1")){
+        if (item.get(Constants.LOVE).equals("1")){
             defaultVH.mLove.setChecked(true);
         } else {
             defaultVH.mLove.setChecked(false);
@@ -103,19 +104,20 @@ public class CardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
                 HMAux mPosAux = data_filtered.get(mPosition);
                 //
                 if (checked){
-                    mPosAux.put("love", "1");
+                    mPosAux.put(Constants.LOVE, "1");
                 } else {
-                    mPosAux.put("love", "0");
+                    mPosAux.put(Constants.LOVE, "0");
                 }
             }
         });
         //
-        mGlide.load(item.get("image"))
+        mGlide.load(item.get(Constants.IMAGE))
                 .into(defaultVH.mImage);
 
-        defaultVH.mTopLabel.setText(item.get("toplabel"));
-        defaultVH.mMiddleLabel.setText(ToolBox.getSafeSubstring(ToolBox.getBreakNewLine(item.get("middlelabel")), 30));
-        defaultVH.mBottomLabel.setText(item.get("bottomlabel"));
+        defaultVH.mTopLabel.setText(item.get(Constants.TOPLABEL));
+        defaultVH.mMiddleLabel.setText(ToolBox.getSafeSubstring(ToolBox.getBreakNewLine(item.get(Constants.MIDDLELABEL)), 30));
+        defaultVH.mBottomLabel.setText(item.get(Constants.BOTTOMLABEL));
+        defaultVH.mEventCount.setText(item.get(Constants.EVENTCOUNT) + " events >");
     }
 
     @Override
@@ -150,6 +152,7 @@ public class CardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
         TextView mTopLabel;
         TextView mMiddleLabel;
         TextView mBottomLabel;
+        TextView mEventCount;
 
         public DefaultVH(View itemView) {
             super(itemView);
@@ -159,6 +162,7 @@ public class CardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
             mTopLabel = itemView.findViewById(R.id.cell_toplabel);
             mMiddleLabel = itemView.findViewById(R.id.cell_middellabel);
             mBottomLabel = itemView.findViewById(R.id.cell_bottomlabel);
+            mEventCount = itemView.findViewById(R.id.cell_eventcount);
         }
     }
 
@@ -184,8 +188,8 @@ public class CardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
                     constraint = ToolBox.AccentMapper(constraint.toString());
                     //
                     for (int i = 0; i < data.size(); i++) {
-                        String mKey_S_1 = ToolBox.AccentMapper(data.get(i).get("toplabel").toLowerCase());
-                        String mKey_S_2 = ToolBox.AccentMapper(data.get(i).get("middlelabel").toLowerCase());
+                        String mKey_S_1 = ToolBox.AccentMapper(data.get(i).get(Constants.TOPLABEL).toLowerCase());
+                        String mKey_S_2 = ToolBox.AccentMapper(data.get(i).get(Constants.MIDDLELABEL).toLowerCase());
                         if (mKey_S_1.contains(constraint.toString().toLowerCase()) ||
                                 mKey_S_2.contains(constraint.toString().toLowerCase())
                                 ) {

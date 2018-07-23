@@ -4,7 +4,7 @@ public class Trans_Env {
 
     private String startDate;
     private String endDarte;
-    private boolean includeSuggested;
+    private String includeSuggested;
 
     public String getStartDate() {
         return startDate;
@@ -22,11 +22,11 @@ public class Trans_Env {
         this.endDarte = endDarte;
     }
 
-    public boolean isIncludeSuggested() {
+    public String getIncludeSuggested() {
         return includeSuggested;
     }
 
-    public void setIncludeSuggested(boolean includeSuggested) {
+    public void setIncludeSuggested(String includeSuggested) {
         this.includeSuggested = includeSuggested;
     }
 }
