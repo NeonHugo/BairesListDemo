@@ -54,6 +54,14 @@ public class CardsList extends AppCompatActivity implements CardsListContract.I_
         ll_content.setVisibility(View.GONE);
         ll_empty.setVisibility(View.GONE);
         //
+        ll_error.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ll_error.setVisibility(View.GONE);
+                mPresenter.getCardsList(ToolBox.sDays(null, 0), ToolBox.sDays(null, 10), true);
+            }
+        });
+        //
         et_search = findViewById(R.id.et_search);
         rv_cards = findViewById(R.id.rv_cards);
         rv_cards.setLayoutManager(new LinearLayoutManager(this));
