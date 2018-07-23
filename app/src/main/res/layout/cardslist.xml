@@ -4,10 +4,19 @@
     android:layout_height="match_parent">
 
     <LinearLayout
-        android:id="@+id/ll_empty"
+        android:id="@+id/ll_error"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical" />
+        android:gravity="center"
+        android:orientation="vertical" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Error: "
+            android:textSize="25sp"/>
+
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/ll_content"
@@ -25,6 +34,21 @@
             android:id="@+id/rv_cards"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_empty"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Lista Vazia"
+            android:textSize="25sp"/>
 
     </LinearLayout>
 

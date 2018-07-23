@@ -9,11 +9,13 @@ public interface CardsListContract {
     interface I_View {
 
         void loadCardList(ArrayList<HMAux> cards);
+        //
+        void onFailure(String error);
 
     }
 
     interface I_Presenter {
-
         void getCardsList(String startDate, String endDarte, boolean includeSuggested);
     }
+
 }

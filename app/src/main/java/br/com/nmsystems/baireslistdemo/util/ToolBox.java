@@ -14,6 +14,8 @@ import java.io.StringWriter;
 import java.io.Writer;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -165,6 +167,30 @@ public class ToolBox {
         }
 
         return writer.toString();
+    }
+
+    public static String sDays(String sDTFormat, int days_to_add) {
+        String sFormat = null;
+        //
+        if (sDTFormat == null || sDTFormat.isEmpty()) {
+            sFormat = "yyyy-MM-dd";
+        } else {
+            sFormat = sDTFormat;
+        }
+
+        String sResults = "";
+        Calendar ca1 = Calendar.getInstance();
+        ca1.set(Calendar.DAY_OF_MONTH, ca1.get(Calendar.DAY_OF_MONTH) + (days_to_add));
+        //
+        SimpleDateFormat sdf = new SimpleDateFormat(sFormat);
+
+        try {
+            sResults = sdf.format(ca1.getTime());
+        } catch (Exception var5) {
+            sResults = "1900-01-01";
+        }
+
+        return sResults;
     }
 
 }
