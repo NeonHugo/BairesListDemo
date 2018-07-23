@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- common attributes -->
+    <attr name="mHint" format="string" />
+    <attr name="mValue" format="string" />
+    <attr name="mEnabled" format="boolean" />
+
+    <declare-styleable name="EditTextSearch">
+        <attr name="mHint" />
+        <attr name="mValue" />
+        <attr name="mEnabled" />
+    </declare-styleable>
+
+</resources>
