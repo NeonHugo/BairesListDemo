@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/cell_image"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/album_cover_height"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:clickable="true"
+        android:scaleType="fitXY"
+        android:foreground="@drawable/trending_gradient_shape"
+        android:src="@mipmap/ic_launcher" />
+
+    <CheckBox
+        android:id="@+id/cell_love"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/cell_image"
+        android:background="@drawable/ic_heart_status"
+        android:button="@null"
+        android:layout_margin="20dp" />
+
+    <TextView
+        android:id="@+id/cell_toplabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/cell_love"
+        android:layout_toRightOf="@id/cell_love"
+        android:textColor="#FFFFFFFF"
+        android:textSize="20sp"
+        android:text="Titulo" />
+
+    <TextView
+        android:id="@+id/cell_middellabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/cell_love"
+        android:layout_below="@id/cell_image"
+        android:layout_marginTop="20dp"
+        android:textSize="16sp"
+        android:text="Teste de Colocacao de teste" />
+
+    <TextView
+        android:id="@+id/cell_bottomlabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/cell_love"
+        android:layout_below="@id/cell_middellabel"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="5dp"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:text="Teste de Colocacao de teste" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/cell_image"
+        android:layout_alignBaseline="@id/cell_middellabel"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="20dp"
+        android:text="49 Events >" />
+
+
+</RelativeLayout>
