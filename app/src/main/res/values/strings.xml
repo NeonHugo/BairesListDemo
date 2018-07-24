@@ -5,4 +5,11 @@
     <string name="events_count">%1$s events ></string>
     <string name="click_to_retry">Try Again</string>
     <string name="empty_list">Empty List</string>
+
+    <string name="font_fontFamily_medium">sans-serif</string>
+    <string name="font_fontFamily_condensed">sans-serif-condensed</string>
+
+    <string name="tab_suggested">Suggested</string>
+    <string name="tab_viewed">Viewd</string>
+    <string name="tab_favorities">Favorities</string>
 </resources>

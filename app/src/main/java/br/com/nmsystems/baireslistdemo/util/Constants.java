@@ -8,4 +8,6 @@ public class Constants {
     public static final String BOTTOMLABEL = "bottomlabel";
     public static final String EVENTCOUNT = "eventCount";
     public static final String LOVE = "love";
+
+    public static final int DAYS_TO_SEARCH = 10;
 }

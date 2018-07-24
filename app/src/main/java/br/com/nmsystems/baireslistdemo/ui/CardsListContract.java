@@ -9,8 +9,10 @@ public interface CardsListContract {
     interface I_View {
 
         void loadCardList(ArrayList<HMAux> cards);
-        //
+
         void onFailure(String error);
+
+        void refreshLLStatus(int uiStatus);
 
     }
 

@@ -36,6 +36,20 @@ public class CardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
 
     private RequestManager mGlide;
 
+    private boolean option = true;
+
+    private String selection = "";
+
+    public boolean getOption() {
+        return option;
+    }
+
+    public void setOption(boolean option) {
+        this.option = option;
+        //
+        getFilter().filter(selection);
+    }
+
     public CardAdapter(List<HMAux> data, RequestManager mGlide) {
         this.data = data;
         this.data_filtered = new ArrayList<>();
@@ -91,7 +105,7 @@ public class CardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
         //
         defaultVH.mLove.setOnCheckedChangeListener(null);
         defaultVH.mLove.setTag(position);
-        if (item.get(Constants.LOVE).equals("1")){
+        if (item.get(Constants.LOVE).equals("1")) {
             defaultVH.mLove.setChecked(true);
         } else {
             defaultVH.mLove.setChecked(false);
@@ -103,7 +117,7 @@ public class CardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
                 //
                 HMAux mPosAux = data_filtered.get(mPosition);
                 //
-                if (checked){
+                if (checked) {
                     mPosAux.put(Constants.LOVE, "1");
                 } else {
                     mPosAux.put(Constants.LOVE, "0");
@@ -182,26 +196,50 @@ public class CardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
         protected FilterResults performFiltering(CharSequence constraint) {
             FilterResults results = new FilterResults();
 
+            selection = (String) constraint;
+
             try {
-                if (constraint != null && constraint.length() > 0) {
-                    ArrayList<HMAux> filterList = new ArrayList<HMAux>();
+                ArrayList<HMAux> filterList = new ArrayList<HMAux>();
+
+                if ((constraint != null && constraint.length() > 0)) {
                     constraint = ToolBox.AccentMapper(constraint.toString());
                     //
                     for (int i = 0; i < data.size(); i++) {
                         String mKey_S_1 = ToolBox.AccentMapper(data.get(i).get(Constants.TOPLABEL).toLowerCase());
                         String mKey_S_2 = ToolBox.AccentMapper(data.get(i).get(Constants.MIDDLELABEL).toLowerCase());
+                        String mKey_Love = data.get(i).get(Constants.LOVE);
+
                         if (mKey_S_1.contains(constraint.toString().toLowerCase()) ||
                                 mKey_S_2.contains(constraint.toString().toLowerCase())
                                 ) {
+                            if (option) {
+                                if (mKey_Love.equals("1")) {
+                                    filterList.add(data.get(i));
+                                }
 
-                            filterList.add(data.get(i));
+                            } else {
+                                filterList.add(data.get(i));
+                            }
+                        } else {
                         }
                     }
                     results.count = filterList.size();
                     results.values = filterList;
                 } else {
-                    results.count = data.size();
-                    results.values = data;
+                    if (option) {
+                        for (int i = 0; i < data.size(); i++) {
+                            String mKey_Love = data.get(i).get(Constants.LOVE);
+
+                            if (option && mKey_Love.equals("1")) {
+                                filterList.add(data.get(i));
+                            }
+                        }
+                        results.count = filterList.size();
+                        results.values = filterList;
+                    } else {
+                        results.count = data.size();
+                        results.values = data;
+                    }
                 }
             } catch (Exception e) {
                 results.count = data.size();

@@ -4,7 +4,7 @@ import org.junit.Test;
 
 import br.com.nmsystems.baireslistdemo.util.ToolBox;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Example local unit test, which will execute on the development machine (host).
@@ -17,9 +17,9 @@ public class ExampleUnitTest {
 
         String text = "Agora é uma boa hora para fazer essa verificacao";
 
-        ToolBox.getSafeSubstring(text, 10);
+        boolean results = ToolBox.getSafeSubstring(text, 10).length() <= 14;
 
-        assertEquals(true, (ToolBox.getSafeSubstring(text, 10).length()) <= 14);
+        assertEquals(true, results);
     }
 
     @Test
@@ -27,13 +27,37 @@ public class ExampleUnitTest {
 
         String text = "Agora é uma";
 
-        ToolBox.getSafeSubstring(text, 30);
+        boolean results = ToolBox.getSafeSubstring(text, 10).length() <= 30;
 
-        assertEquals(true, (ToolBox.getSafeSubstring(text, 10).length()) <= 30);
+        assertEquals(true, results);
     }
 
+    @Test
+    public void removeAccente() {
+        String text = "Agora é nóis";
 
+        String results = ToolBox.AccentMapper(text);
 
+        assertEquals("Agora e nois", results);
+    }
 
+    @Test
+    public void getFirstLine() {
+        String text = "Now is The Time\nFor You My Master";
+
+        String results = ToolBox.getBreakNewLine(text);
+
+        assertEquals("Now is The Time", results);
+    }
+
+    @Test
+    public void getDays() {
+        String refDate = "2018-07-10";
+        String resDate = "2018-08-04";
+
+        String results = ToolBox.sDays("yyyy-MM-dd", refDate, 25);
+
+        assertEquals(resDate, results);
+    }
 
 }

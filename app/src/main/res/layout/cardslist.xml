@@ -1,56 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <LinearLayout
-        android:clickable="true"
-        android:id="@+id/ll_error"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:orientation="vertical" >
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/click_to_retry"
-            android:textSize="25sp"/>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/ll_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <br.com.nmsystems.libmaster.EditTextSearch
-            android:id="@+id/et_search"
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tabs"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp" />
+            android:layout_height="@dimen/custom_tab_layout_height"
+            android:background="@color/tab_transparent"
+            app:tabBackground="@drawable/tab_color_selector"
+            app:tabGravity="fill"
+            app:tabMode="fixed" />
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv_cards"
+        <LinearLayout
+            android:id="@+id/ll_status"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:clickable="true"
+            android:gravity="center"
+            android:orientation="vertical">
 
-    </LinearLayout>
+            <ProgressBar
+                android:id="@+id/pb_status"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
 
-    <LinearLayout
-        android:id="@+id/ll_empty"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:orientation="vertical" >
+            <ImageView
+                android:id="@+id/iv_status"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:src="@mipmap/ic_launcher" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/empty_list"
-            android:textSize="25sp"/>
+            <TextView
+                android:id="@+id/tv_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/click_to_retry"
+                android:textSize="25sp" />
 
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <br.com.nmsystems.libmaster.EditTextSearch
+                android:id="@+id/et_search"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_cards"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </LinearLayout>
     </LinearLayout>
 
 </FrameLayout>

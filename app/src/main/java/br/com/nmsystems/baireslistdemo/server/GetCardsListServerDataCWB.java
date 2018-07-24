@@ -14,14 +14,14 @@ import br.com.nmsystems.baireslistdemo.util.Constants;
 import br.com.nmsystems.baireslistdemo.util.HMAux;
 import br.com.nmsystems.baireslistdemo.util.ToolBox;
 
-public class GetCardsListServerData implements GetCardsListServerDataContract {
+public class GetCardsListServerDataCWB implements GetCardsListServerDataContract {
 
     public static final String BASE_URL = "https://webservices.vividseats.com/rest/mobile/v1/home/cards";
 
     private CardsListContract.I_View mView;
 
 
-    public GetCardsListServerData(CardsListContract.I_View mView) {
+    public GetCardsListServerDataCWB(CardsListContract.I_View mView) {
         this.mView = mView;
     }
 
@@ -42,16 +42,15 @@ public class GetCardsListServerData implements GetCardsListServerDataContract {
 
         @Override
         protected void onPreExecute() {
-
         }
 
         @Override
         protected String doInBackground(String... strings) {
 
-            String resultado = null;
+            String results = null;
 
             try {
-                resultado = ToolBox.connWebService(
+                results = ToolBox.connWebService(
                         BASE_URL,
                         strings[0]
                 );
@@ -59,7 +58,7 @@ public class GetCardsListServerData implements GetCardsListServerDataContract {
                 return e.toString();
             }
 
-            return resultado;
+            return results;
         }
 
         @Override

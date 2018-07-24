@@ -26,4 +26,7 @@
     <dimen name="font_size_item_md">16sp</dimen>
 
     <dimen name="font_size_title_dialog">20sp</dimen>
+
+    <dimen name="custom_tab_layout_height">72dp</dimen>
+    <dimen name="tab_label">14sp</dimen>
 </resources>

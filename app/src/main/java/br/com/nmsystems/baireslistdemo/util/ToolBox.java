@@ -14,10 +14,8 @@ import java.io.StringWriter;
 import java.io.Writer;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.text.FieldPosition;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -171,29 +169,32 @@ public class ToolBox {
         return writer.toString();
     }
 
-    public static String sDays(String sDTFormat, int days_to_sub) {
+    public static String sDays(String sDTFormat, String mDate, int days_to_add) {
         String sFormat = null;
-        //
+        String sResults = "";
+
         if (sDTFormat == null || sDTFormat.isEmpty()) {
-            sDTFormat = "yyyy-MM-dd";
+            sFormat = "yyyy-MM-dd";
         } else {
             sFormat = sDTFormat;
         }
 
-        String sResults = "";
-        Calendar ca1 = Calendar.getInstance();
-        ca1.set(Calendar.DAY_OF_MONTH, ca1.get(Calendar.DAY_OF_MONTH) + (days_to_sub + 1));
+        SimpleDateFormat dateFormat = new SimpleDateFormat(sFormat);
+
+        Calendar calAux = Calendar.getInstance();
         //
-        SimpleDateFormat sdf = new SimpleDateFormat(sFormat) {
-            public StringBuffer format(Date date, StringBuffer toAppendTo, FieldPosition pos) {
-                StringBuffer toFix = super.format(date, toAppendTo, pos);
-                return toFix.insert(toFix.length() - 2, ':');
-            }
-        };
+        try{
+            calAux.setTime(dateFormat.parse(mDate));
+        } catch (Exception e){
+        }
+        //
+        calAux.set(Calendar.DAY_OF_MONTH, calAux.get(Calendar.DAY_OF_MONTH) + (days_to_add));
+        //
+
 
         try {
-            sResults = sdf.format(ca1.getTime());
-        } catch (Exception var5) {
+            sResults = dateFormat.format(calAux.getTime());
+        } catch (Exception e) {
             sResults = "1900-01-01";
         }
 
