@@ -84,7 +84,7 @@ public class CardsList extends AppCompatActivity implements CardsListContract.I_
         TextView tabSuggested = (TextView) LayoutInflater.from(this).inflate(R.layout.custom_tab, null);
         tabSuggested.setText(R.string.tab_suggested);
         //tabSuggested.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_heart_on, 0, 0);
-        //
+
         TabLayout.Tab firstTab = tabLayout.newTab();
         firstTab.setCustomView(tabSuggested);
         tabLayout.addTab(firstTab);
@@ -92,7 +92,7 @@ public class CardsList extends AppCompatActivity implements CardsListContract.I_
         TextView tabViewed = (TextView) LayoutInflater.from(this).inflate(R.layout.custom_tab, null);
         tabViewed.setText(R.string.tab_viewed);
         //tabViewed.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_heart_off, 0, 0);
-        //
+
         TabLayout.Tab firstSecond = tabLayout.newTab();
         firstSecond.setCustomView(tabViewed);
         //tabLayout.addTab(firstSecond);
@@ -100,7 +100,7 @@ public class CardsList extends AppCompatActivity implements CardsListContract.I_
         TextView tab = (TextView) LayoutInflater.from(this).inflate(R.layout.custom_tab, null);
         tab.setText(R.string.tab_favorities);
         //tab.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_heart_on, 0, 0);
-        //
+
         TabLayout.Tab firstThird = tabLayout.newTab();
         firstThird.setCustomView(tab);
         tabLayout.addTab(firstThird);
@@ -134,8 +134,14 @@ public class CardsList extends AppCompatActivity implements CardsListContract.I_
     @Override
     public void loadCardList(ArrayList<HMAux> cards) {
         adapterCards = new CardAdapter(cards, Glide.with(this));
+        adapterCards.setOnItemClickListener(new CardAdapter.ItemClickListener() {
+            @Override
+            public void onItemClick(int position, HMAux item) {
+                int i = 10;
+            }
+        });
         rv_cards.setAdapter(adapterCards);
-        //
+
         if (adapterCards != null && !changeCfg) {
             changeCfg = !changeCfg;
 

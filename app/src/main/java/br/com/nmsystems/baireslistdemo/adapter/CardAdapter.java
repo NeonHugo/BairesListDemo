@@ -24,6 +24,9 @@ import br.com.nmsystems.baireslistdemo.util.ToolBox;
 
 public class CardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements Filterable {
 
+    /**
+     *
+     */
     public static final String TYPE = "type";
 
     public static final int DEFAULT = 1;
@@ -42,6 +45,21 @@ public class CardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
 
     public boolean getOption() {
         return option;
+    }
+
+
+    /**
+     *
+     */
+    public interface ItemClickListener {
+
+        void onItemClick(int position, HMAux item);
+    }
+
+    private ItemClickListener itemClickListener;
+
+    public void setOnItemClickListener(ItemClickListener itemClickListener) {
+        this.itemClickListener = itemClickListener;
     }
 
     public void setOption(boolean option) {
@@ -100,11 +118,12 @@ public class CardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
 
     private void processDefault(RecyclerView.ViewHolder holder, int position) {
         HMAux item = data_filtered.get(position);
-        //
+
         DefaultVH defaultVH = (DefaultVH) holder;
-        //
+
         defaultVH.mLove.setOnCheckedChangeListener(null);
         defaultVH.mLove.setTag(position);
+
         if (item.get(Constants.LOVE).equals("1")) {
             defaultVH.mLove.setChecked(true);
         } else {
@@ -124,7 +143,7 @@ public class CardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
                 }
             }
         });
-        //
+
         mGlide.load(item.get(Constants.IMAGE))
                 .into(defaultVH.mImage);
 
@@ -160,7 +179,7 @@ public class CardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
     /**
      * Default ViewHolder
      */
-    protected class DefaultVH extends RecyclerView.ViewHolder {
+    protected class DefaultVH extends RecyclerView.ViewHolder implements View.OnClickListener{
         CheckBox mLove;
         ImageView mImage;
         TextView mTopLabel;
@@ -177,6 +196,18 @@ public class CardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
             mMiddleLabel = itemView.findViewById(R.id.cell_middellabel);
             mBottomLabel = itemView.findViewById(R.id.cell_bottomlabel);
             mEventCount = itemView.findViewById(R.id.cell_eventcount);
+
+            mImage.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            if(itemClickListener != null) {
+                int position = getAdapterPosition();
+                HMAux item = data_filtered.get(position);
+
+                itemClickListener.onItemClick(getAdapterPosition(), item);
+            }
         }
     }
 
@@ -203,7 +234,7 @@ public class CardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
 
                 if ((constraint != null && constraint.length() > 0)) {
                     constraint = ToolBox.AccentMapper(constraint.toString());
-                    //
+
                     for (int i = 0; i < data.size(); i++) {
                         String mKey_S_1 = ToolBox.AccentMapper(data.get(i).get(Constants.TOPLABEL).toLowerCase());
                         String mKey_S_2 = ToolBox.AccentMapper(data.get(i).get(Constants.MIDDLELABEL).toLowerCase());
@@ -223,6 +254,7 @@ public class CardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
                         } else {
                         }
                     }
+
                     results.count = filterList.size();
                     results.values = filterList;
                 } else {
