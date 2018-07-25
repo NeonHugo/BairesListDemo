@@ -39,7 +39,7 @@ public class CardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
 
     private RequestManager mGlide;
 
-    private boolean option = true;
+    private boolean option = false;
 
     private String selection = "";
 
