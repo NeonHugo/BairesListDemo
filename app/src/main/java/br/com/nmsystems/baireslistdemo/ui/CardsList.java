@@ -183,7 +183,7 @@ public class CardsList extends AppCompatActivity implements CardsListContract.I_
                 ll_status.setVisibility(View.VISIBLE);
                 ll_status.setOnClickListener(statusClick);
                 pb_status.setVisibility(View.GONE);
-                iv_status.setImageResource(R.mipmap.ic_launcher_round);
+                iv_status.setImageResource(R.drawable.ic_empty);
                 iv_status.setVisibility(View.VISIBLE);
                 tv_status.setText("");
 
@@ -193,7 +193,7 @@ public class CardsList extends AppCompatActivity implements CardsListContract.I_
                 ll_status.setVisibility(View.VISIBLE);
                 ll_status.setOnClickListener(statusClick);
                 pb_status.setVisibility(View.GONE);
-                iv_status.setImageResource(R.mipmap.ic_launcher);
+                iv_status.setImageResource(R.drawable.ic_sync_alert);
                 iv_status.setVisibility(View.VISIBLE);
                 tv_status.setText("");
 
@@ -204,7 +204,7 @@ public class CardsList extends AppCompatActivity implements CardsListContract.I_
                 ll_status.setOnClickListener(null);
                 pb_status.setVisibility(View.VISIBLE);
                 iv_status.setVisibility(View.GONE);
-
+                tv_status.setText("");
                 ll_content.setVisibility(View.GONE);
                 break;
             default:
