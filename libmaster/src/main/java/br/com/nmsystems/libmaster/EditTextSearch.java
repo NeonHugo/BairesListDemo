@@ -15,12 +15,32 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
+/**
+ * Custom Widget implementing a clear button and a border using a shape drawable
+ * Future enhancements:
+ * 1) BarCode Reader
+ * 2) Border control
+ * 3) Drawable (Left/Right) control
+ * 4) Masks
+ * 5) NFC
+ */
 public class EditTextSearch extends LinearLayout {
 
     private Context context;
 
+    /**
+     * hint to be displayed
+     */
     private String mHint;
+
+    /**
+     * text
+     */
     private String mValue;
+
+    /**
+     * enable/disable control
+     */
     private boolean mEnabled;
 
     protected transient LinearLayout llBackground;

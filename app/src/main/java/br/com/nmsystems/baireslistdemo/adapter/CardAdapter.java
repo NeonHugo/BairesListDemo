@@ -25,31 +25,50 @@ import br.com.nmsystems.baireslistdemo.util.ToolBox;
 public class CardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements Filterable {
 
     /**
-     *
+     * support for multiple item types
      */
     public static final String TYPE = "type";
 
     public static final int DEFAULT = 1;
     public static final int SECOUND_OPTION = 2;
 
+    /**
+     * data is a collection of HMAux(HashMap<String,String>). Allow restriction of properties and the use of multiple data sources
+     * on the same collection.
+     */
     private List<HMAux> data;
+
+    /**
+     * filtered data to be used.
+     */
     private ArrayList<HMAux> data_filtered;
 
+    /**
+     *
+     */
     private ValueFilter valueFilter;
 
+    /**
+     * Responsible for asynchronously downloading the images from the server.
+     */
     private RequestManager mGlide;
 
+    /**
+     * Flag for filtering the favorities (false = no filter / true = filter)
+     */
     private boolean option = false;
 
+    /**
+     * cache for the text used in the filter
+     */
     private String selection = "";
 
     public boolean getOption() {
         return option;
     }
 
-
     /**
-     *
+     * Interface for on Item click implementation. Returns the position and de HMAux referenced by the parameter position
      */
     public interface ItemClickListener {
 
@@ -62,12 +81,24 @@ public class CardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
         this.itemClickListener = itemClickListener;
     }
 
+    /**
+     * setter for favorites filter using the cache text (selection) if available
+     *
+     * @param option (true = filter favorites / false = no filter.
+     */
     public void setOption(boolean option) {
         this.option = option;
         //
         getFilter().filter(selection);
     }
 
+
+    /**
+     * Constructor defining the raw and filtered data, the request manager and the filter to be used
+     *
+     * @param data   lists of raw data
+     * @param mGlide RequestManager for download image asynchronously
+     */
     public CardAdapter(List<HMAux> data, RequestManager mGlide) {
         this.data = data;
         this.data_filtered = new ArrayList<>();
@@ -78,6 +109,13 @@ public class CardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
         getFilter();
     }
 
+    /**
+     * Defines the viewHolder to be used. Support multiple holder in the same collection.
+     *
+     * @param parent
+     * @param viewType
+     * @return Type of holder to be used.
+     */
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -86,6 +124,9 @@ public class CardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View viewModel;
 
+        /**
+         * Using only one holder but is prepared for multiples holders
+         */
         switch (viewType) {
             case DEFAULT:
                 viewModel = inflater.inflate(R.layout.cell, parent, false);
@@ -101,6 +142,11 @@ public class CardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
         return viewHolder;
     }
 
+    /**
+     * Binds the specific viewHolder and set its actions.
+     * @param holder
+     * @param position
+     */
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         switch (getItemViewType(position)) {
@@ -116,6 +162,11 @@ public class CardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
         }
     }
 
+    /**
+     * Binds the default ViewHolder. Reprograms onCheckedChanged on the favority checkbox
+     * @param holder
+     * @param position
+     */
     private void processDefault(RecyclerView.ViewHolder holder, int position) {
         HMAux item = data_filtered.get(position);
 
@@ -129,6 +180,7 @@ public class CardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
         } else {
             defaultVH.mLove.setChecked(false);
         }
+
         defaultVH.mLove.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
@@ -148,11 +200,21 @@ public class CardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
                 .into(defaultVH.mImage);
 
         defaultVH.mTopLabel.setText(item.get(Constants.TOPLABEL));
-        defaultVH.mMiddleLabel.setText(ToolBox.getSafeSubstring(ToolBox.getBreakNewLine(item.get(Constants.MIDDLELABEL)), 30));
+        defaultVH.mMiddleLabel.setText(
+                ToolBox.getSafeSubstring(
+                        ToolBox.getBreakNewLine(item.get(Constants.MIDDLELABEL)),
+                        Constants.STRING_MAX_SIZE
+                )
+        );
         defaultVH.mBottomLabel.setText(item.get(Constants.BOTTOMLABEL));
         defaultVH.mEventCount.setText(item.get(Constants.EVENTCOUNT) + " events >");
     }
 
+    /**
+     * Defines the Type of Holder to be used according to the parameter item reference by the parameter position
+     * @param position
+     * @return
+     */
     @Override
     public int getItemViewType(int position) {
         HMAux item = data_filtered.get(position);
@@ -171,15 +233,19 @@ public class CardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
         }
     }
 
+    /**
+     * How many rows are in my collection after the filter has been applied
+     * @return
+     */
     @Override
     public int getItemCount() {
         return data_filtered.size();
     }
 
     /**
-     * Default ViewHolder
+     * Default ViewHolder. Implements onClickListener for handling item selection
      */
-    protected class DefaultVH extends RecyclerView.ViewHolder implements View.OnClickListener{
+    protected class DefaultVH extends RecyclerView.ViewHolder implements View.OnClickListener {
         CheckBox mLove;
         ImageView mImage;
         TextView mTopLabel;
@@ -202,7 +268,7 @@ public class CardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
 
         @Override
         public void onClick(View view) {
-            if(itemClickListener != null) {
+            if (itemClickListener != null) {
                 int position = getAdapterPosition();
                 HMAux item = data_filtered.get(position);
 
@@ -211,6 +277,10 @@ public class CardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
         }
     }
 
+    /**
+     * Initializes the filter.
+     * @return
+     */
     @Override
     public Filter getFilter() {
         if (valueFilter == null) {
@@ -221,6 +291,11 @@ public class CardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
         return valueFilter;
     }
 
+    /**
+     * Filters data using the text search field value and option(favorite).
+     * The Text Search is implemented on (TopLabel/MiddleLabel)
+     * Option is implemented on (LOVED)
+     */
     private class ValueFilter extends Filter {
 
         @Override

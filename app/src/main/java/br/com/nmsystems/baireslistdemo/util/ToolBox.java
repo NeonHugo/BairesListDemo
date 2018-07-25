@@ -22,6 +22,9 @@ import java.util.Map;
 import javax.net.ssl.HttpsURLConnection;
 
 public class ToolBox {
+    /**
+     * List of character with accent for change before a filtering is done
+     */
     private static final Map<Character, Character> ACCENT_MAP = initAccentMap();
 
     private static Map<Character, Character> initAccentMap() {
@@ -60,6 +63,11 @@ public class ToolBox {
         return map;
     }
 
+    /**
+     * Remove Accent Character from String
+     * @param string - raw string
+     * @return - cleaned string
+     */
     public static String AccentMapper(String string) {
         if (string == null) {
             return "";
@@ -77,6 +85,11 @@ public class ToolBox {
         }
     }
 
+    /**
+     * Detects a New Line on a String Array and return the first part
+     * @param s - raw string
+     * @return - first line
+     */
     public static String getBreakNewLine(String s) {
         try {
             String[] lines = s.split("\\r?\\n");
@@ -92,6 +105,12 @@ public class ToolBox {
         }
     }
 
+    /**
+     * Limits the size of string for cell layout use on the RecyclerView
+     * @param s - raw string
+     * @param maxLength - safe string
+     * @return
+     */
     public static String getSafeSubstring(String s, int maxLength) {
         if (!TextUtils.isEmpty(s)) {
             if (s.length() >= maxLength) {
@@ -101,6 +120,14 @@ public class ToolBox {
         return s;
     }
 
+    /**
+     * Not user anymore. Handle the WebService Call. Should Only be used inside a Service, AsyncTask on Thread.
+     * Make Synchronous calls.
+     * @param urlEnd - endpoint url.
+     * @param params - parameters in json.
+     * @return - output from the WebService Call
+     * @throws Exception - Exception to be handled by the calling process.
+     */
     public static String connWebService(String urlEnd, String params) throws Exception {
         StringBuilder sb = new StringBuilder();
 
@@ -141,6 +168,11 @@ public class ToolBox {
         return sb.toString();
     }
 
+    /**
+     * Reads Input Streamm and returns the text info retrieved.
+     * @param inputStream
+     * @return
+     */
     private static String readStreamAux(InputStream inputStream) {
         Reader reader = null;
         Writer writer = new StringWriter();
@@ -169,6 +201,13 @@ public class ToolBox {
         return writer.toString();
     }
 
+    /**
+     * Calculated the final data (x) days from the informed data for use on the WebService Call.
+     * @param sDTFormat - Date Format. Defaults "yyyy-MM-dd".
+     * @param mDate - Start Date
+     * @param days_to_add - Number of Days to include
+     * @return
+     */
     public static String sDays(String sDTFormat, String mDate, int days_to_add) {
         String sFormat = null;
         String sResults = "";

@@ -30,21 +30,48 @@ public class CardsList extends AppCompatActivity implements CardsListContract.I_
 
     private Context context;
 
+    /**
+     * Used for Selection of Suggested and Favorites Sections.
+     */
     private TabLayout tabLayout;
 
+    /**
+     * Status Screen. Show Empty List or Raw Data Souce or Failures on trying to connect.
+     * Implements a Click to Retry the WebService Access.
+     */
     private LinearLayout ll_status;
     private ProgressBar pb_status;
     private ImageView iv_status;
     private TextView tv_status;
     //
+
+    /**
+     * Main Screen. Show the Data Recovered from the server. This Raw data is filtered by Suggested / Favorites section
+     * and by the text informed on the search box.
+     */
     private LinearLayout ll_content;
 
+    /**
+     * Custom EditText created with a clear field property and a Border to the view.
+     */
     private EditTextSearch et_search;
+    /**
+     * list of cards.
+     */
     private RecyclerView rv_cards;
+    /**
+     * Adapter to handle data and filtering for the recycler view.
+     */
     private CardAdapter adapterCards;
 
+    /**
+     * Presenter for the getting the list from the WebService
+     */
     private CardsListPresenter mPresenter;
 
+    /**
+     * Detect first initialisation of CardAdapter
+     */
     private boolean changeCfg = false;
 
     @Override
@@ -56,6 +83,12 @@ public class CardsList extends AppCompatActivity implements CardsListContract.I_
         initActions();
     }
 
+    /**
+     * Section for initialization of components. Using a MVP Pattern.
+     * An Obj that implements a GetCardsListServerDataContract Interface passed to the presenter.
+     * This Obj is responsible for calling the WebService to retrieve the card list.
+     * @param savedInstanceState
+     */
     private void initVars(Bundle savedInstanceState) {
         context = getBaseContext();
 
@@ -76,9 +109,13 @@ public class CardsList extends AppCompatActivity implements CardsListContract.I_
         mPresenter = new CardsListPresenter(new GetCardsListServerDataRetrofit(this));
 
         refreshLLStatus(UIStatus.PROGRESS);
+
         mPresenter.getCardsList(ToolBox.sDays(null, "", 0), ToolBox.sDays(null, "", Constants.DAYS_TO_SEARCH), true);
     }
 
+    /**
+     * Implements a TabLayout for the sections selection (Suggested/Favorites)
+     */
     private void setupTabIcons() {
 
         TextView tabSuggested = (TextView) LayoutInflater.from(this).inflate(R.layout.custom_tab, null);
@@ -106,6 +143,11 @@ public class CardsList extends AppCompatActivity implements CardsListContract.I_
         tabLayout.addTab(firstThird);
     }
 
+    /**
+     * Implements the Status Actions on click to retry a WebService Call in case of failure or a Empty List
+     * Implements the TabSelected Action for filtering by categories(Suggested/Favorites) combined with the text informed
+     * on the search box
+     */
     private void initActions() {
         ll_status.setOnClickListener(statusClick);
 
@@ -131,6 +173,12 @@ public class CardsList extends AppCompatActivity implements CardsListContract.I_
         });
     }
 
+    /**
+     * Load the CardList returned from the WebService Call.
+     * Implements Item Click for future processing returning the row associated with the clicked item.
+     * Implements the Text Changed on the search box.
+     * @param cards
+     */
     @Override
     public void loadCardList(ArrayList<HMAux> cards) {
         adapterCards = new CardAdapter(cards, Glide.with(this));
@@ -167,11 +215,19 @@ public class CardsList extends AppCompatActivity implements CardsListContract.I_
         });
     }
 
+    /**
+     * Handles WebAcess Failure
+     * @param error
+     */
     @Override
     public void onFailure(String error) {
         refreshLLStatus(UIStatus.ERROR);
     }
 
+    /**
+     * Handles Screen Updates
+     * @param uiStatus
+     */
     @Override
     public void refreshLLStatus(int uiStatus) {
         switch (uiStatus) {
@@ -212,6 +268,9 @@ public class CardsList extends AppCompatActivity implements CardsListContract.I_
         }
     }
 
+    /**
+     * Implementain of the Click interface for the status reports.
+     */
     private View.OnClickListener statusClick = new View.OnClickListener() {
         @Override
         public void onClick(View view) {

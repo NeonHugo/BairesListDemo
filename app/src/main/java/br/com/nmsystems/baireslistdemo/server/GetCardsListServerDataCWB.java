@@ -14,6 +14,10 @@ import br.com.nmsystems.baireslistdemo.util.Constants;
 import br.com.nmsystems.baireslistdemo.util.HMAux;
 import br.com.nmsystems.baireslistdemo.util.ToolBox;
 
+/**
+ * Old Method. Not Used Anymore. Used on the beginning of the development to acess WebService
+ * Easily replaced for GetCardsListServerDataRetrofit. Both Implement the same Contract.
+ */
 public class GetCardsListServerDataCWB implements GetCardsListServerDataContract {
 
     public static final String BASE_URL = "https://webservices.vividseats.com/rest/mobile/v1/home/cards";

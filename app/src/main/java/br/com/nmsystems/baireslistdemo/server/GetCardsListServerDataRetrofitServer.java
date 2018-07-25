@@ -11,6 +11,11 @@ import retrofit2.http.POST;
 
 public interface GetCardsListServerDataRetrofitServer {
 
+    /**
+     * Interface for acessing the WebService provided by the client
+     * @param body
+     * @return
+     */
     @Headers({
             "Content-Type: application/json",
             "X-Mobile-Platform: Android"

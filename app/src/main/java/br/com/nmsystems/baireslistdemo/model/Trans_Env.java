@@ -1,5 +1,8 @@
 package br.com.nmsystems.baireslistdemo.model;
 
+/**
+ * Old Class. Not Used Anymore. Used with GetCardsListServerDataCWB.
+ */
 public class Trans_Env {
 
     private String startDate;

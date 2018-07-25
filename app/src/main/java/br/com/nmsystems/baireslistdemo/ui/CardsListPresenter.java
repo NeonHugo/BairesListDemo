@@ -4,6 +4,9 @@ import br.com.nmsystems.baireslistdemo.server.GetCardsListServerDataContract;
 
 public class CardsListPresenter implements CardsListContract.I_Presenter {
 
+    /**
+     * Interface for access to the CardList.
+     */
     private GetCardsListServerDataContract mServer;
 
     public CardsListPresenter(GetCardsListServerDataContract mServer) {

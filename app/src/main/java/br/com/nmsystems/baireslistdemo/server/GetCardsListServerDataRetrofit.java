@@ -15,19 +15,30 @@ import retrofit2.Response;
 
 public class GetCardsListServerDataRetrofit implements GetCardsListServerDataContract {
 
+    /**
+     * interface to access the View
+     */
     private CardsListContract.I_View mView;
 
     public GetCardsListServerDataRetrofit(CardsListContract.I_View mView) {
         this.mView = mView;
     }
 
+    /**
+     * Handles WebService Call to retrieve card list
+     * @param startDate
+     * @param endDarte
+     * @param includeSuggested
+     */
     @Override
     public void getCardsList(String startDate, String endDarte, boolean includeSuggested) {
 
         GetCardsListServerDataRetrofitServer service =
                 RetrofitInstance.getRetrofitInstance().create(GetCardsListServerDataRetrofitServer.class);
 
-
+        /**
+         * Parameters for the call
+         */
         Map<String, String> requestBody = new HashMap<>();
         requestBody.put("startDate", startDate);
         requestBody.put("endDate", endDarte);
@@ -41,6 +52,10 @@ public class GetCardsListServerDataRetrofit implements GetCardsListServerDataCon
                 if (response.body() != null) {
                     ArrayList<Card> cardsClass = (ArrayList<Card>) response.body();
 
+                    /**
+                     * The Card ArrayList<Card> is recreated to an ArrayList<HMAux> only with the proper field selection
+                     * for the RecyclerView
+                     */
                     ArrayList<HMAux> cards = new ArrayList<>();
                     for (int i = 0; i < cardsClass.size(); i++) {
                         HMAux item = new HMAux();
@@ -55,14 +70,23 @@ public class GetCardsListServerDataRetrofit implements GetCardsListServerDataCon
                         cards.add(item);
                     }
 
+                    /**
+                     * Calls view with the info retrieved
+                     */
                     mView.loadCardList(cards);
                 } else {
+                    /**
+                     * Calls view with a serious error (for example: connection loss)
+                     */
                     mView.onFailure(response.errorBody().toString());
                 }
             }
 
             @Override
             public void onFailure(Call<List<Card>> call, Throwable t) {
+                /**
+                 * Calls view with a serious error reported by Retrofit
+                 */
                 mView.onFailure(t.getMessage());
             }
         });

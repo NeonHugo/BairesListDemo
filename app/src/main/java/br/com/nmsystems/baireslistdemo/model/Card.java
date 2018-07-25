@@ -2,6 +2,9 @@ package br.com.nmsystems.baireslistdemo.model;
 
 public class Card {
 
+    /**
+     * Card info specified by the webService
+     */
     private String topLabel;
     private String middleLabel;
     private String bottomLabel;

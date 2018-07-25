@@ -5,6 +5,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitInstance {
 
+    /**
+     * Returns a Retrofit Object configured to the url informed
+     */
     private static Retrofit retrofit;
     private static final String BASE_URL = "https://webservices.vividseats.com/";
 

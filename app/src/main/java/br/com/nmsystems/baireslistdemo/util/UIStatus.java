@@ -1,5 +1,9 @@
 package br.com.nmsystems.baireslistdemo.util;
 
+
+/**
+ * UI Status for Screen Update
+ */
 public class UIStatus {
 
     public static final int OK = 0;
