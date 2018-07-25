@@ -12,35 +12,47 @@ import static org.junit.Assert.assertEquals;
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
 public class ExampleUnitTest {
+    /**
+     * Long text should be resized and include ... at the end
+     */
     @Test
     public void isSafety_Longer() {
 
-        String text = "Agora é uma boa hora para fazer essa verificacao";
+        String text = "Now is a good time to do that check";
 
         boolean results = ToolBox.getSafeSubstring(text, 10).length() <= 14;
 
         assertEquals(true, results);
     }
 
+    /**
+     * Short text should no be modified
+     */
     @Test
     public void isSafety_Shorter() {
 
-        String text = "Agora é uma";
+        String text = "Now is a";
 
         boolean results = ToolBox.getSafeSubstring(text, 10).length() <= 30;
 
         assertEquals(true, results);
     }
 
+    /**
+     * Text in portugues. The accent should be replaced by a another character without the accent
+     */
     @Test
     public void removeAccente() {
-        String text = "Agora é nóis";
+        String text = "Agora é certo";
 
         String results = ToolBox.AccentMapper(text);
 
-        assertEquals("Agora e nois", results);
+        assertEquals("Agora e certo", results);
     }
 
+    /**
+     * The text to be returned should go until the first "\n"
+     */
     @Test
     public void getFirstLine() {
         String text = "Now is The Time\nFor You My Master";
@@ -50,6 +62,9 @@ public class ExampleUnitTest {
         assertEquals("Now is The Time", results);
     }
 
+    /**
+     *  Generate a Date 25 days after the referenced date
+     */
     @Test
     public void getDays() {
         String refDate = "2018-07-10";
