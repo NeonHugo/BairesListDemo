@@ -14,8 +14,8 @@ public class CardsListPresenter implements CardsListContract.I_Presenter {
     }
 
     @Override
-    public void getCardsList(String startDate, String endDarte, boolean includeSuggested) {
-        mServer.getCardsList(startDate, endDarte, includeSuggested);
+    public void getCardsList(String startDate, String endDate, boolean includeSuggested) {
+        mServer.getCardsList(startDate, endDate, includeSuggested);
     }
 
 }

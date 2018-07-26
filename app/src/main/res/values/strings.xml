@@ -12,4 +12,7 @@
     <string name="tab_suggested">Suggested</string>
     <string name="tab_viewed">Viewd</string>
     <string name="tab_favorities">Favorities</string>
+
+    <string name="favorite_true">1</string>
+    <string name="favorite_false">0</string>
 </resources>

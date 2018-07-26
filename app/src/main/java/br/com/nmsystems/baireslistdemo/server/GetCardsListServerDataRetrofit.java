@@ -15,6 +15,12 @@ import retrofit2.Response;
 
 public class GetCardsListServerDataRetrofit implements GetCardsListServerDataContract {
 
+    public static final String START_DATE = "startDate";
+    public static final String END_DATE = "endDate";
+    public static final String INCLUDE_SUGGESTED = "includeSuggested";
+
+    public static final String ROW_EMPTY = "0";
+
     /**
      * interface to access the View
      */
@@ -26,12 +32,13 @@ public class GetCardsListServerDataRetrofit implements GetCardsListServerDataCon
 
     /**
      * Handles WebService Call to retrieve card list
+     *
      * @param startDate
-     * @param endDarte
+     * @param endDate
      * @param includeSuggested
      */
     @Override
-    public void getCardsList(String startDate, String endDarte, boolean includeSuggested) {
+    public void getCardsList(String startDate, String endDate, boolean includeSuggested) {
 
         GetCardsListServerDataRetrofitServer service =
                 RetrofitInstance.getRetrofitInstance().create(GetCardsListServerDataRetrofitServer.class);
@@ -40,9 +47,9 @@ public class GetCardsListServerDataRetrofit implements GetCardsListServerDataCon
          * Parameters for the call
          */
         Map<String, String> requestBody = new HashMap<>();
-        requestBody.put("startDate", startDate);
-        requestBody.put("endDate", endDarte);
-        requestBody.put("includeSuggested", String.valueOf(includeSuggested));
+        requestBody.put(START_DATE, startDate);
+        requestBody.put(END_DATE, endDate);
+        requestBody.put(INCLUDE_SUGGESTED, String.valueOf(includeSuggested));
 
         Call<List<Card>> call = service.cards(requestBody);
 
@@ -65,7 +72,7 @@ public class GetCardsListServerDataRetrofit implements GetCardsListServerDataCon
                         item.put(Constants.MIDDLELABEL, cardsClass.get(i).getMiddleLabel());
                         item.put(Constants.BOTTOMLABEL, cardsClass.get(i).getBottomLabel());
                         item.put(Constants.EVENTCOUNT, String.valueOf(cardsClass.get(i).getEventCount()));
-                        item.put(Constants.LOVE, "0");
+                        item.put(Constants.LOVE, ROW_EMPTY);
 
                         cards.add(item);
                     }

@@ -3,6 +3,7 @@ package br.com.nmsystems.baireslistdemo.ui;
 import java.util.ArrayList;
 
 import br.com.nmsystems.baireslistdemo.util.HMAux;
+import br.com.nmsystems.baireslistdemo.util.UIStatus;
 
 public interface CardsListContract {
 
@@ -15,7 +16,7 @@ public interface CardsListContract {
 
         void onFailure(String error);
 
-        void refreshLLStatus(int uiStatus);
+        void refreshLLStatus(UIStatus uiStatus);
 
     }
 
@@ -23,7 +24,7 @@ public interface CardsListContract {
      * Interface on the Presenter for handling Access to the CardList
      */
     interface I_Presenter {
-        void getCardsList(String startDate, String endDarte, boolean includeSuggested);
+        void getCardsList(String startDate, String endDate, boolean includeSuggested);
     }
 
 }

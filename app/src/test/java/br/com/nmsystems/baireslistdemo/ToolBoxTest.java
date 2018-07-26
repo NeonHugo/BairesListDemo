@@ -5,24 +5,24 @@ import org.junit.Test;
 import br.com.nmsystems.baireslistdemo.util.ToolBox;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Example local unit test, which will execute on the development machine (host).
  *
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
-public class ExampleUnitTest {
+public class ToolBoxTest {
     /**
      * Long text should be resized and include ... at the end
      */
     @Test
     public void isSafety_Longer() {
-
         String text = "Now is a good time to do that check";
 
         boolean results = ToolBox.getSafeSubstring(text, 10).length() <= 14;
 
-        assertEquals(true, results);
+        assertTrue(results);
     }
 
     /**
@@ -30,12 +30,11 @@ public class ExampleUnitTest {
      */
     @Test
     public void isSafety_Shorter() {
-
         String text = "Now is a";
 
         boolean results = ToolBox.getSafeSubstring(text, 10).length() <= 30;
 
-        assertEquals(true, results);
+        assertTrue(results);
     }
 
     /**

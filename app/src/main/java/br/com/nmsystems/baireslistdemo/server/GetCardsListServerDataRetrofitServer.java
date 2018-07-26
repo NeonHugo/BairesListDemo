@@ -17,8 +17,8 @@ public interface GetCardsListServerDataRetrofitServer {
      * @return
      */
     @Headers({
-            "Content-Type: application/json",
-            "X-Mobile-Platform: Android"
+            "Content-Type: application/json;charset=utf-8",
+            "X-Mobile-Platform: Android;charset=utf-8"
     })
     @POST("rest/mobile/v1/home/cards")
     Call<List<Card>> cards(@Body Map<String, String> body);

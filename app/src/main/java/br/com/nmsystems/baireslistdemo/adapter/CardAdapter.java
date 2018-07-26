@@ -1,5 +1,6 @@
 package br.com.nmsystems.baireslistdemo.adapter;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -24,13 +25,14 @@ import br.com.nmsystems.baireslistdemo.util.ToolBox;
 
 public class CardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements Filterable {
 
+    private Context context;
     /**
      * support for multiple item types
      */
     public static final String TYPE = "type";
 
     public static final int DEFAULT = 1;
-    public static final int SECOUND_OPTION = 2;
+    public static final int SECOND_OPTION = 2;
 
     /**
      * data is a collection of HMAux(HashMap<String,String>). Allow restriction of properties and the use of multiple data sources
@@ -99,12 +101,14 @@ public class CardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
      * @param data   lists of raw data
      * @param mGlide RequestManager for download image asynchronously
      */
-    public CardAdapter(List<HMAux> data, RequestManager mGlide) {
+    public CardAdapter(List<HMAux> data, RequestManager mGlide, Context context) {
         this.data = data;
         this.data_filtered = new ArrayList<>();
         this.data_filtered.addAll(data);
         //
         this.mGlide = mGlide;
+        //
+        this.context = context;
         //
         getFilter();
     }
@@ -132,7 +136,7 @@ public class CardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
                 viewModel = inflater.inflate(R.layout.cell, parent, false);
                 viewHolder = new DefaultVH(viewModel);
                 break;
-            case SECOUND_OPTION:
+            case SECOND_OPTION:
             default:
                 viewModel = inflater.inflate(R.layout.cell, parent, false);
                 viewHolder = new DefaultVH(viewModel);
@@ -144,6 +148,7 @@ public class CardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
 
     /**
      * Binds the specific viewHolder and set its actions.
+     *
      * @param holder
      * @param position
      */
@@ -154,7 +159,7 @@ public class CardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
             case DEFAULT:
                 processDefault(holder, position);
                 break;
-            case SECOUND_OPTION:
+            case SECOND_OPTION:
                 break;
             default:
                 processDefault(holder, position);
@@ -164,6 +169,7 @@ public class CardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
 
     /**
      * Binds the default ViewHolder. Reprograms onCheckedChanged on the favority checkbox
+     *
      * @param holder
      * @param position
      */
@@ -175,7 +181,7 @@ public class CardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
         defaultVH.mLove.setOnCheckedChangeListener(null);
         defaultVH.mLove.setTag(position);
 
-        if (item.get(Constants.LOVE).equals("1")) {
+        if (item.get(Constants.LOVE).equals(context.getString(R.string.favorite_true))) {
             defaultVH.mLove.setChecked(true);
         } else {
             defaultVH.mLove.setChecked(false);
@@ -189,9 +195,9 @@ public class CardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
                 HMAux mPosAux = data_filtered.get(mPosition);
                 //
                 if (checked) {
-                    mPosAux.put(Constants.LOVE, "1");
+                    mPosAux.put(Constants.LOVE, context.getString(R.string.favorite_true));
                 } else {
-                    mPosAux.put(Constants.LOVE, "0");
+                    mPosAux.put(Constants.LOVE, context.getString(R.string.favorite_false));
                 }
             }
         });
@@ -212,6 +218,7 @@ public class CardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
 
     /**
      * Defines the Type of Holder to be used according to the parameter item reference by the parameter position
+     *
      * @param position
      * @return
      */
@@ -220,11 +227,11 @@ public class CardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
         HMAux item = data_filtered.get(position);
 
         try {
-            switch (item.get(TYPE)) {
-                case "1":
+            switch (Integer.parseInt(item.get(TYPE))) {
+                case 1:
                     return DEFAULT;
-                case "2":
-                    return SECOUND_OPTION;
+                case 2:
+                    return SECOND_OPTION;
                 default:
                     return DEFAULT;
             }
@@ -235,6 +242,7 @@ public class CardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
 
     /**
      * How many rows are in my collection after the filter has been applied
+     *
      * @return
      */
     @Override
@@ -279,6 +287,7 @@ public class CardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
 
     /**
      * Initializes the filter.
+     *
      * @return
      */
     @Override
@@ -319,7 +328,7 @@ public class CardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
                                 mKey_S_2.contains(constraint.toString().toLowerCase())
                                 ) {
                             if (option) {
-                                if (mKey_Love.equals("1")) {
+                                if (mKey_Love.equals(context.getString(R.string.favorite_true))) {
                                     filterList.add(data.get(i));
                                 }
 
@@ -337,7 +346,7 @@ public class CardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
                         for (int i = 0; i < data.size(); i++) {
                             String mKey_Love = data.get(i).get(Constants.LOVE);
 
-                            if (option && mKey_Love.equals("1")) {
+                            if (option && mKey_Love.equals(context.getString(R.string.favorite_true))) {
                                 filterList.add(data.get(i));
                             }
                         }

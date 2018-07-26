@@ -87,6 +87,7 @@ public class CardsList extends AppCompatActivity implements CardsListContract.I_
      * Section for initialization of components. Using a MVP Pattern.
      * An Obj that implements a GetCardsListServerDataContract Interface passed to the presenter.
      * This Obj is responsible for calling the WebService to retrieve the card list.
+     *
      * @param savedInstanceState
      */
     private void initVars(Bundle savedInstanceState) {
@@ -105,7 +106,6 @@ public class CardsList extends AppCompatActivity implements CardsListContract.I_
 
         setupTabIcons();
 
-        //mPresenter = new CardsListPresenter(new GetCardsListServerDataCWB(this));
         mPresenter = new CardsListPresenter(new GetCardsListServerDataRetrofit(this));
 
         refreshLLStatus(UIStatus.PROGRESS);
@@ -120,27 +120,17 @@ public class CardsList extends AppCompatActivity implements CardsListContract.I_
 
         TextView tabSuggested = (TextView) LayoutInflater.from(this).inflate(R.layout.custom_tab, null);
         tabSuggested.setText(R.string.tab_suggested);
-        //tabSuggested.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_heart_on, 0, 0);
 
         TabLayout.Tab firstTab = tabLayout.newTab();
         firstTab.setCustomView(tabSuggested);
         tabLayout.addTab(firstTab);
 
-        TextView tabViewed = (TextView) LayoutInflater.from(this).inflate(R.layout.custom_tab, null);
-        tabViewed.setText(R.string.tab_viewed);
-        //tabViewed.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_heart_off, 0, 0);
+        TextView tabFavorites = (TextView) LayoutInflater.from(this).inflate(R.layout.custom_tab, null);
+        tabFavorites.setText(R.string.tab_favorities);
 
-        TabLayout.Tab firstSecond = tabLayout.newTab();
-        firstSecond.setCustomView(tabViewed);
-        //tabLayout.addTab(firstSecond);
-
-        TextView tab = (TextView) LayoutInflater.from(this).inflate(R.layout.custom_tab, null);
-        tab.setText(R.string.tab_favorities);
-        //tab.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_heart_on, 0, 0);
-
-        TabLayout.Tab firstThird = tabLayout.newTab();
-        firstThird.setCustomView(tab);
-        tabLayout.addTab(firstThird);
+        TabLayout.Tab secondTab = tabLayout.newTab();
+        secondTab.setCustomView(tabFavorites);
+        tabLayout.addTab(secondTab);
     }
 
     /**
@@ -154,7 +144,7 @@ public class CardsList extends AppCompatActivity implements CardsListContract.I_
         tabLayout.addOnTabSelectedListener(new TabLayout.BaseOnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                if (tab.getPosition() != 0){
+                if (tab.getPosition() != 0) {
                     adapterCards.setOption(true);
                 } else {
                     adapterCards.setOption(false);
@@ -177,15 +167,16 @@ public class CardsList extends AppCompatActivity implements CardsListContract.I_
      * Load the CardList returned from the WebService Call.
      * Implements Item Click for future processing returning the row associated with the clicked item.
      * Implements the Text Changed on the search box.
+     *
      * @param cards
      */
     @Override
     public void loadCardList(ArrayList<HMAux> cards) {
-        adapterCards = new CardAdapter(cards, Glide.with(this));
+        adapterCards = new CardAdapter(cards, Glide.with(this), context);
         adapterCards.setOnItemClickListener(new CardAdapter.ItemClickListener() {
             @Override
             public void onItemClick(int position, HMAux item) {
-                int i = 10;
+
             }
         });
         rv_cards.setAdapter(adapterCards);
@@ -217,6 +208,7 @@ public class CardsList extends AppCompatActivity implements CardsListContract.I_
 
     /**
      * Handles WebAcess Failure
+     *
      * @param error
      */
     @Override
@@ -226,16 +218,17 @@ public class CardsList extends AppCompatActivity implements CardsListContract.I_
 
     /**
      * Handles Screen Updates
+     *
      * @param uiStatus
      */
     @Override
-    public void refreshLLStatus(int uiStatus) {
+    public void refreshLLStatus(UIStatus uiStatus) {
         switch (uiStatus) {
-            case UIStatus.OK:
+            case OK:
                 ll_status.setVisibility(View.GONE);
                 ll_content.setVisibility(View.VISIBLE);
                 break;
-            case UIStatus.EMPTY:
+            case EMPTY:
                 ll_status.setVisibility(View.VISIBLE);
                 ll_status.setOnClickListener(statusClick);
                 pb_status.setVisibility(View.GONE);
@@ -245,7 +238,7 @@ public class CardsList extends AppCompatActivity implements CardsListContract.I_
 
                 ll_content.setVisibility(View.GONE);
                 break;
-            case UIStatus.ERROR:
+            case ERROR:
                 ll_status.setVisibility(View.VISIBLE);
                 ll_status.setOnClickListener(statusClick);
                 pb_status.setVisibility(View.GONE);
@@ -255,7 +248,7 @@ public class CardsList extends AppCompatActivity implements CardsListContract.I_
 
                 ll_content.setVisibility(View.GONE);
                 break;
-            case UIStatus.PROGRESS:
+            case PROGRESS:
                 ll_status.setVisibility(View.VISIBLE);
                 ll_status.setOnClickListener(null);
                 pb_status.setVisibility(View.VISIBLE);
