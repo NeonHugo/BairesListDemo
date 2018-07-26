@@ -9,9 +9,6 @@ Nothing Special. Just Clone it for use.
 
 > This structure will allow an expansion for the creation of new controls that can be customized.
 
-###  GetCardsListServerDataCWB / Trans_Env
-> This is a alternative way to access the WebService. These two files are not been used. if you want to use it make the following change in CardsList.Java
-
 ```sh
 mPresenter = new CardsListPresenter(new GetCardsListServerDataCWB(this));
 ```
