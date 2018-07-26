@@ -9,7 +9,4 @@ Nothing Special. Just Clone it for use.
 
 > This structure will allow an expansion for the creation of new controls that can be customized.
 
-```sh
-mPresenter = new CardsListPresenter(new GetCardsListServerDataCWB(this));
-```
  
