@@ -187,20 +187,26 @@ public class CardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
             defaultVH.mLove.setChecked(false);
         }
 
-        defaultVH.mLove.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
-                int mPosition = (int) compoundButton.getTag();
-                //
-                HMAux mPosAux = data_filtered.get(mPosition);
-                //
-                if (checked) {
-                    mPosAux.put(Constants.LOVE, context.getString(R.string.favorite_true));
-                } else {
-                    mPosAux.put(Constants.LOVE, context.getString(R.string.favorite_false));
+        if (option) {
+            defaultVH.mLove.setOnCheckedChangeListener(null);
+            defaultVH.mLove.setEnabled(false);
+        } else {
+            defaultVH.mLove.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
+                    int mPosition = (int) compoundButton.getTag();
+                    //
+                    HMAux mPosAux = data_filtered.get(mPosition);
+                    //
+                    if (checked) {
+                        mPosAux.put(Constants.LOVE, context.getString(R.string.favorite_true));
+                    } else {
+                        mPosAux.put(Constants.LOVE, context.getString(R.string.favorite_false));
+                    }
                 }
-            }
-        });
+            });
+            defaultVH.mLove.setEnabled(true);
+        }
 
         mGlide.load(item.get(Constants.IMAGE))
                 .into(defaultVH.mImage);
