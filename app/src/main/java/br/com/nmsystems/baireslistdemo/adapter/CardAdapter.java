@@ -213,7 +213,7 @@ public class CardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
                 )
         );
         defaultVH.mBottomLabel.setText(item.get(Constants.BOTTOMLABEL));
-        defaultVH.mEventCount.setText(item.get(Constants.EVENTCOUNT) + " events >");
+        defaultVH.mEventCount.setText(context.getResources().getString(R.string.events_count, item.get(Constants.EVENTCOUNT)));
     }
 
     /**
